@@ -52,7 +52,15 @@ body{
         box-shadow: 0px 0px 3px 3px $orange;
         border-radius: 10px;
         .calculator {
-            h2 {margin-bottom: 5px; color: $green;}
+            h2 {
+                margin-bottom: 5px; color: $green; 
+                p{
+                    display: inline;
+                    color: white;
+                    font-size: 12px;
+                    a {color: $orange}
+                }
+            }
             h3 {text-align: center; margin-bottom: 20px;}
             .input-screen, .output-screen {
                 height: 50px;
@@ -73,8 +81,32 @@ body{
                     caret-shape: underscore;
                 }    
             }
-            .output-screen {margin-bottom: 20px; input{text-align: right;}}
+            .output-screen {margin-bottom: 10px; input{text-align: right;}}
             .buttons {
+                .nav{
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin-bottom: 10px;
+                    .nav-left, .nav-right {
+                        @include button(30px,50px,60%);
+                        margin: 0 5px;
+                        .arrow {
+                            border: 2px solid white;
+                            border-width: 0 3px 3px 0;
+                            display: inline-block;
+                            padding: 3px;
+                        }
+                        .right {
+                            transform: rotate(-45deg);
+                            -webkit-transform: rotate(-45deg);
+                        }
+                        .left {
+                            transform: rotate(135deg);
+                            -webkit-transform: rotate(135deg);
+                        }
+                    }
+                }
                 .special {
                     display: grid;
                     grid-template-columns: auto auto auto auto auto;
