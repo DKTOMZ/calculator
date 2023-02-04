@@ -1,0 +1,112 @@
+@import url("https://fonts.googleapis.com/css?family=ABeeZee");
+
+$green: #1DB954;
+$black: #141414;
+$lwhite: #f1f0f0;
+$darkblue: #2c3640;
+$orange: #fc9b2c;
+$gray: rgb(82, 82, 82);
+
+@font-face {
+    font-family: Digital;
+    src: url('./assets/fonts/Digital7-rg1mL.ttf');
+}
+
+@mixin button ($height,$width,$radius) {
+    height: $height;
+    width: $width;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    background-color: $gray;
+    border-radius: $radius;
+    box-shadow: 1px 4px 4px 0px $black;
+    &:hover {background-color: $green; cursor: pointer;}
+    &:active {transform: translateY(4px);}
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'ABeeZee', Arial, Helvetica, sans-serif;
+    height: 100vh;
+    background-color: $black;
+    color: white;
+    .App {
+        background-color: $darkblue;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        padding: 20px;
+        box-shadow: 0px 0px 3px 3px $orange;
+        border-radius: 10px;
+        .calculator {
+            h2 {margin-bottom: 5px; color: $green;}
+            h3 {text-align: center; margin-bottom: 20px;}
+            .input-screen, .output-screen {
+                height: 50px;
+                width: 340px;
+                background-color: $black;
+                padding: 8px;
+                box-shadow: 0px 2px 2px 0px $black;
+                input {
+                    outline: none; 
+                    height: 100%; 
+                    width: 100%; 
+                    background-color: inherit;
+                    border: none; 
+                    color: white;
+                    font-size: 32px;
+                    font-family: Digital;
+                    caret-color: white;
+                    caret-shape: underscore;
+                }    
+            }
+            .output-screen {margin-bottom: 20px; input{text-align: right;}}
+            .buttons {
+                .special {
+                    display: grid;
+                    grid-template-columns: auto auto auto auto auto;
+                    gap: 10px;
+                    margin-bottom: 10px;
+                    .special-button {
+                        @include button(40px,60px,60%);
+                        font-size: 14px;
+                    }
+                }
+                .normal {
+                    display: grid;
+                    grid-template-columns: auto auto auto auto auto;
+                    gap: 10px;
+                    .normal-button {
+                        @include button(40px,60px,5px);
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .App{
+        transform: scale(0.8);
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .App{
+        transform: scale(0.6);
+    }
+}
+
