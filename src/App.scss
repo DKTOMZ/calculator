@@ -65,6 +65,7 @@ body{
             .input-screen, .output-screen {
                 height: 50px;
                 width: 340px;
+                pointer-events: none;
                 background-color: $black;
                 padding: 8px;
                 box-shadow: 0px 2px 2px 0px $black;
