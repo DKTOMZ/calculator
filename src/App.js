@@ -187,17 +187,14 @@ export const App = () => {
         switch (button.id) {
             case 'ON':
                 setPower('OFF');
-                inputRef.current.style.color = '#141414';
-                outputRef.current.style.color = '#141414';
-                inputRef.current.style.caretColor = '#141414';
-                outputRef.current.style.caretColor = '#141414';
+                inputRef.current.style.display = 'none';
+                outputRef.current.style.display = 'none';
+                setInputScreen(' ');
                 break;
             case 'OFF':
                 setPower('ON');
-                inputRef.current.style.color = 'white';
-                outputRef.current.style.color = 'white';
-                inputRef.current.style.caretColor = 'white';
-                inputRef.current.style.caretColor = 'white';
+                inputRef.current.style.display = 'initial';
+                outputRef.current.style.display = 'initial';
                 setInputScreen(' ');
                 setOutputScreen(0);
                 break;
