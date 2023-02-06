@@ -189,17 +189,17 @@ export const App = () => {
                 setPower('OFF');
                 inputRef.current.style.color = '#141414';
                 outputRef.current.style.color = '#141414';
-                inputRef.current.disabled = true;
-                outputRef.current.disabled = true;
+                inputRef.current.style.caretColor = '#141414';
+                outputRef.current.style.caretColor = '#141414';
                 break;
             case 'OFF':
                 setPower('ON');
                 inputRef.current.style.color = 'white';
                 outputRef.current.style.color = 'white';
-                setInputScreen('');
+                inputRef.current.style.caretColor = 'white';
+                inputRef.current.style.caretColor = 'white';
+                setInputScreen(' ');
                 setOutputScreen(0);
-                inputRef.current.disabled = false;
-                outputRef.current.disabled = false;
                 break;
             case 'F<=>D':
                 if (isDecimal) {
