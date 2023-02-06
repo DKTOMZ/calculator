@@ -65,7 +65,6 @@ body{
             .input-screen, .output-screen {
                 height: 50px;
                 width: 340px;
-                pointer-events: none;
                 background-color: $black;
                 padding: 8px;
                 box-shadow: 0px 2px 2px 0px $black;
@@ -80,6 +79,7 @@ body{
                     font-family: Digital;
                     caret-color: white;
                     caret-shape: underscore;
+                    pointer-events: none;
                 }    
             }
             .output-screen {margin-bottom: 10px; input{text-align: right;}}
