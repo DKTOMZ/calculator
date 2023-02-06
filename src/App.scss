@@ -22,7 +22,19 @@ $gray: rgb(82, 82, 82);
     background-color: $gray;
     border-radius: $radius;
     box-shadow: 1px 4px 4px 0px $black;
-    &:hover {background-color: $green; cursor: pointer;}
+    @media(hover: hover) and (pointer: fine){
+        &:hover{
+            background-color: $green;
+            cursor: pointer;
+        }
+    }
+    
+    @media(hover: none) and (pointer: coarse){
+        &:active {
+            background: $green radial-gradient(circle, transparent 1%, $green 1%) center/15000%;;
+            background-size: 100%;
+        }
+    }
     &:active {transform: translateY(4px);}
 }
 
@@ -67,6 +79,7 @@ body{
                 width: 340px;
                 background-color: $black;
                 padding: 8px;
+                padding-left: 0;
                 box-shadow: 0px 2px 2px 0px $black;
                 input {
                     outline: none; 

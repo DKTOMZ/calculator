@@ -77,11 +77,11 @@ export const App = () => {
     
     const updateInputScreen = (button) => {
         setEqualsPressed(false);
-        if (button.value === 'DEL' && inputScreen !== ''){
+        if (button.value === 'DEL' && inputScreen !== '' && inputRef.current.selectionStart > 1){
             let split = inputScreen.substring(0,inputRef.current.selectionStart).split(' ').filter((value,index,string)=>value!=='');
             if (specialFunctions.includes(split[split.length-1])) {
                 let toRemove = inputRef.current.selectionStart-split[split.length-1].length;
-                setInputScreen(inputScreen.replace(split[split.length-1],''));
+                setInputScreen(inputScreen.substring(0,(inputScreen.length-(split[split.length-1].length+1))));
                 setTimeout(() => {
                     adjustCaretAfterEdit(toRemove);
                   }, 0);
@@ -96,7 +96,7 @@ export const App = () => {
         } 
         else if (button.name === 'Ans') {setInputScreen(ans.toString())} 
         else if (button.value === 'AC'){
-            setInputScreen('');
+            setInputScreen(' ');
             setOutputScreen(0);
         } 
         else if (button.value === '=' || button.value === 'DEL') {}
@@ -108,7 +108,7 @@ export const App = () => {
             if(button.value==='.' && (inputScreen.charAt(inputScreen.length-1)==='.' || currentFormula[currentFormula.length-1].includes('.'))){}
             
             else {
-                let toAdd = inputRef.current.selectionStart+1;
+                let toAdd = button.value === '3.142' ? inputRef.current.selectionStart+5: inputRef.current.selectionStart+1;
                 setInputScreen(inputScreen.substring(0,inputRef.current.selectionStart)+button.value+inputScreen.substring(inputRef.current.selectionStart));
                 setTimeout(() => {
                     adjustCaretAfterEdit(toAdd);
@@ -254,8 +254,10 @@ export const App = () => {
     };
     
     const handleLeftNavButton = () => {
+        let split = inputScreen.substring(0,inputRef.current.selectionStart).split(' ').filter((value,index,string)=>value!=='');
         inputRef.current.focus();
         let caretPos = inputRef.current.selectionStart === 1 ? 1 : inputRef.current.selectionStart-1;
+        if (specialFunctions.includes(split[split.length-1])){caretPos = inputRef.current.selectionStart;}
         if(inputRef.current.createTextRange) {
             var range = inputRef.current.createTextRange();
             range.move('character', caretPos);
@@ -295,7 +297,7 @@ export const App = () => {
             <div className="calculator">
                 <h2>SCICALC <p>By <a href="https://dennis-tomno.onrender.com" rel="noreferrer" target="_blank">Dennis Tomno</a></p></h2>
                 <div className="input-screen">
-                    <input inputMode="none" ref={inputRef} onKeyDown={(e)=>e.preventDefault()} onChange={(e)=>setInputScreen(e.target.value)} value={inputScreen}/>
+                    <input inputMode="none" ref={inputRef} type="text" onKeyDown={(e)=>e.preventDefault()} onChange={(e)=>setInputScreen(e.target.value)} value={inputScreen}/>
                 </div>
                 <div className="output-screen">
                     <input inputMode="none" id="display" onKeyDown={(e)=>e.preventDefault()} ref={outputRef} onChange={(e)=>setInputScreen(e.target.value)} value={outputScreen}/>
