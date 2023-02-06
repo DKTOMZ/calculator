@@ -295,10 +295,10 @@ export const App = () => {
             <div className="calculator">
                 <h2>SCICALC <p>By <a href="https://dennis-tomno.onrender.com" rel="noreferrer" target="_blank">Dennis Tomno</a></p></h2>
                 <div className="input-screen">
-                    <input ref={inputRef} type="text" onKeyDown={(e)=>e.preventDefault()} onChange={(e)=>setInputScreen(e.target.value)} value={inputScreen}/>
+                    <input inputMode="none" ref={inputRef} onKeyDown={(e)=>e.preventDefault()} onChange={(e)=>setInputScreen(e.target.value)} value={inputScreen}/>
                 </div>
                 <div className="output-screen">
-                    <input id="display" onKeyDown={(e)=>e.preventDefault()} ref={outputRef} onChange={(e)=>setInputScreen(e.target.value)} value={outputScreen}/>
+                    <input inputMode="none" id="display" onKeyDown={(e)=>e.preventDefault()} ref={outputRef} onChange={(e)=>setInputScreen(e.target.value)} value={outputScreen}/>
                 </div>
                 <div className="buttons">
                     <div className="nav">
