@@ -254,7 +254,7 @@ export const App = () => {
         let split = inputScreen.substring(0,inputRef.current.selectionStart).split(' ').filter((value,index,string)=>value!=='');
         inputRef.current.focus();
         let caretPos = inputRef.current.selectionStart === 1 ? 1 : inputRef.current.selectionStart-1;
-        if (specialFunctions.includes(split[split.length-1])){caretPos = inputRef.current.selectionStart;}
+        if (specialFunctions.includes(split[split.length-1])){caretPos = inputRef.current.selectionStart-split[split.length-1].length-1;}
         if(inputRef.current.createTextRange) {
             var range = inputRef.current.createTextRange();
             range.move('character', caretPos);
@@ -271,8 +271,10 @@ export const App = () => {
     };
 
     const handleRightNavButton = () => {
+        let split = inputScreen.substring(inputRef.current.selectionStart).split('(').filter((value,index,string)=>value!=='');
         inputRef.current.focus();
         let caretPos = inputRef.current.selectionStart+1;
+        if (specialFunctions.includes(split[0].trimStart()+'(')){caretPos = inputRef.current.selectionStart+split[0].length+1;}
         if(inputRef.current.createTextRange) {
             var range = inputRef.current.createTextRange();
             range.move('character', caretPos);
