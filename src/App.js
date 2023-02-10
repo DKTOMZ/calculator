@@ -81,14 +81,15 @@ export const App = () => {
             let split = inputScreen.substring(0,inputRef.current.selectionStart).split(' ').filter((value,index,string)=>value!=='');
             if (specialFunctions.includes(split[split.length-1])) {
                 let toRemove = inputRef.current.selectionStart-split[split.length-1].length;
-                setInputScreen(inputScreen.substring(0,(inputScreen.length-(split[split.length-1].length+1))));
+                let rest = inputScreen.substring(inputRef.current.selectionStart).trimStart();
+                setInputScreen(inputScreen.substring(0,toRemove).trimEnd()+rest);
                 setTimeout(() => {
-                    adjustCaretAfterEdit(toRemove);
+                    adjustCaretAfterEdit(toRemove-1);
                   }, 0);
             }
             else {
                 let toRemove = inputRef.current.selectionStart-1;
-                setInputScreen(inputScreen.substring(0,inputRef.current.selectionStart-1)+inputScreen.substring(inputRef.current.selectionStart-1+1));
+                setInputScreen(inputScreen.substring(0,toRemove)+inputScreen.substring(inputRef.current.selectionStart));
                 setTimeout(() => {
                     adjustCaretAfterEdit(toRemove);
                   }, 0);
@@ -184,37 +185,38 @@ export const App = () => {
 
     const handleSpecialButtons = (button) => {
         setEqualsPressed(false);
-        switch (button.id) {
-            case 'ON':
-                setPower('OFF');
-                inputRef.current.style.display = 'none';
-                outputRef.current.style.display = 'none';
-                setInputScreen(' ');
-                break;
-            case 'OFF':
-                setPower('ON');
-                inputRef.current.style.display = 'initial';
-                outputRef.current.style.display = 'initial';
-                setInputScreen(' ');
-                setOutputScreen(0);
-                break;
-            case 'F<=>D':
-                if (isDecimal) {
-                    setIsDecimal(false);
-                    let fraction = math.fraction(outputScreen);
-                    let numer = fraction.n *fraction.s;
-                    let denom = fraction.d === 1 ? '' : `/${fraction.d}`;
-                    setOutputScreen(`${numer}${denom}`);
-                }
-                else {
-                    setIsDecimal(true);
-                    setOutputScreen(eval(outputScreen));
-                }
-                break;
-            default:
-                setInputScreen(inputScreen+button.id);
-                inputRef.current.focus();
-                break;
+        if (button.id === 'ON') {
+            setPower('OFF');
+            inputRef.current.style.display = 'none';
+            outputRef.current.style.display = 'none';
+            setInputScreen(' ');
+        }
+        else if (button.id === 'OFF') {
+            setPower('ON');
+            inputRef.current.style.display = 'initial';
+            outputRef.current.style.display = 'initial';
+            setInputScreen(' ');
+            setOutputScreen(0);
+        }
+        else if (button.id === 'F<=>D') {
+            if (isDecimal) {
+                setIsDecimal(false);
+                let fraction = math.fraction(outputScreen);
+                let numer = fraction.n *fraction.s;
+                let denom = fraction.d === 1 ? '' : `/${fraction.d}`;
+                setOutputScreen(`${numer}${denom}`);
+            }
+            else {
+                setIsDecimal(true);
+                setOutputScreen(eval(outputScreen));
+            }
+        }
+        else {
+            let initialCursor = inputRef.current.selectionStart;
+            setInputScreen(inputScreen.substring(0,inputRef.current.selectionStart)+button.id+inputScreen.substring(inputRef.current.selectionStart));
+            setTimeout(() => {
+                adjustCaretAfterEdit(initialCursor+button.id.length);
+              }, 0);
         }
     }
 
@@ -274,7 +276,7 @@ export const App = () => {
         let split = inputScreen.substring(inputRef.current.selectionStart).split('(').filter((value,index,string)=>value!=='');
         inputRef.current.focus();
         let caretPos = inputRef.current.selectionStart+1;
-        if (specialFunctions.includes(split[0].trimStart()+'(')){caretPos = inputRef.current.selectionStart+split[0].length+1;}
+        if (split[0] && specialFunctions.includes(split[0].trimStart()+'(')){caretPos = inputRef.current.selectionStart+split[0].length+1;}
         if(inputRef.current.createTextRange) {
             var range = inputRef.current.createTextRange();
             range.move('character', caretPos);
